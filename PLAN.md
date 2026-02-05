@@ -16,7 +16,7 @@ Este documento define la estrategia para integrar Strapi CMS en el proyecto Corp
 
 1.  **Instalación de Strapi:**
     *   Ubicación propuesta: Carpeta `/backend` en la raíz del proyecto (Monorepo).
-    * No uses strapi cloud, lo haremos en local por ahora.
+    * No uses strapi cloud, lo haremos en local por ahora, no inicies sesion.
     *   Base de datos: SQLite (Desarrollo/Local) -> Postgres (Producción).
 2.  **Variables de Entorno (`.env` en Astro):**
     *   `PUBLIC_STRAPI_URL`: URL base del CMS (ej. `http://localhost:1337`).
