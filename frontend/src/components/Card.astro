@@ -1,0 +1,18 @@
+---
+const { img, text } = Astro.props;
+---
+
+<div
+  class="bg-paper border-2 border-steel rounded-lg p-4 flex flex-col items-center text-center shadow-tactile hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-tactile-sm transition-all duration-200"
+  data-aos="fade-up"
+>
+  <div class="w-full aspect-square overflow-hidden rounded-md border-2 border-steel mb-4 bg-white">
+    <img
+      src={img}
+      alt={text}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+    />
+  </div>
+  <p class="mt-2 text-steel font-bold text-lg uppercase tracking-wide">{text}</p>
+</div>

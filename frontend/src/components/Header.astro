@@ -1,0 +1,118 @@
+<header class="fixed top-0 w-full px-6 py-4 z-40 backdrop-blur-md bg-steel/90 border-b-4 border-safety animate-fade-in-down transition-all duration-300">
+  <div class="container mx-auto flex justify-between items-center h-14">
+    
+    <!-- Logo -->
+    <a href="/" class="flex items-center space-x-2">
+      <img
+        src="https://corprecam.com/wp-content/uploads/2023/10/cropped-LOGO__2_-removebg-preview-128x120.png"
+        alt="Corprecam"
+        class="w-12 h-12 drop-shadow-lg"
+      />
+      <span class="text-xl font-bold text-white tracking-wide">Corprecam E.S.P</span>
+    </a>
+
+    <!-- Navegación (Desktop) -->
+    <nav class="hidden md:block">
+      <ul class="flex space-x-8 text-xs font-medium">
+        <li><a href="/" class="text-white hover:text-safety transition-colors font-semibold uppercase tracking-wider">Inicio</a></li>
+        <li><a href="/nuestra-gestion" class="text-white hover:text-safety transition-colors font-semibold uppercase tracking-wider">Gestión</a></li>
+        <li><a href="/about" class="text-white hover:text-safety transition-colors font-semibold uppercase tracking-wider">Nosotros</a></li>
+        <li><a href="/contacto" class="text-white hover:text-safety transition-colors font-semibold uppercase tracking-wider">Contáctanos</a></li>
+        <li><a href="/documentos" class="text-white hover:text-safety transition-colors font-semibold uppercase tracking-wider">Documentos</a></li>
+      </ul>
+    </nav>
+
+    <!-- Botón Hamburguesa -->
+    <button
+      id="menu-btn"
+      class="md:hidden text-white focus:outline-none hover:scale-110 transition-transform"
+      aria-label="Abrir menú"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-7 h-7"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"
+        />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div
+  id="overlay"
+  class="fixed inset-0 bg-black/60 hidden opacity-0 transition-opacity duration-300 z-40"
+></div>
+
+<!-- Menú lateral -->
+<aside
+  id="mobile-menu"
+  class="fixed top-0 left-0 h-full w-64 bg-zinc-500 text-white transform -translate-x-full transition-transform duration-300 ease-in-out shadow-2xl z-50 flex flex-col py-8 px-6 space-y-6"
+>
+  <a href="#" class="text-2xl font-bold flex items-center space-x-2 border-b border-white/20 pb-3">
+    <img
+      src="https://corprecam.com/wp-content/uploads/2023/10/cropped-LOGO__2_-removebg-preview-128x120.png"
+      class="w-10 h-10"
+      alt="Logo Corprecam"
+    />
+    <span>Corprecam</span>
+  </a>
+
+  <nav class="flex flex-col space-y-4 text-lg font-medium mt-2">
+    <a href="/" class="hover:text-green-200 transition-colors">Inicio</a>
+    <a href="/nuestra-gestion" class="hover:text-green-200 transition-colors">Nuestra Gestión</a>
+    <a href="/about" class="hover:text-green-200 transition-colors">Nosotros</a>
+    <a href="/contacto" class="hover:text-green-200 transition-colors">Contacto</a>
+    <a href="/documentos" class="hover:text-green-200 transition-colors">Documentos</a>
+  </nav>
+
+ 
+</aside>
+
+<script>
+    const menuBtn = document.getElementById("menu-btn") as HTMLButtonElement;
+    const mobileMenu = document.getElementById("mobile-menu") as HTMLElement;
+    const overlay = document.getElementById("overlay") as HTMLElement;
+
+    function toggleMenu(open: boolean) {
+      if (open) {
+        mobileMenu.classList.remove("-translate-x-full");
+        overlay.classList.remove("hidden");
+        setTimeout(() => overlay.classList.add("opacity-100"), 10);
+      } else {
+        mobileMenu.classList.add("-translate-x-full");
+        overlay.classList.remove("opacity-100");
+        setTimeout(() => overlay.classList.add("hidden"), 300);
+      }
+    }
+
+    menuBtn.addEventListener("click", () => toggleMenu(true));
+    overlay.addEventListener("click", () => toggleMenu(false));
+  </script>
+
+<script>
+  const header = document.querySelector('header') as HTMLElement;
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const current = window.scrollY;
+    
+    // Si se baja, encoge el header
+      if (current > lastScroll && current > 50) {
+        header.classList.add('py-2', 'bg-steel');
+        header.classList.remove('py-4', 'bg-steel/90');
+      } else {
+        header.classList.add('py-4', 'bg-steel/90');
+        header.classList.remove('py-2', 'bg-steel');
+      }
+
+    lastScroll = current;
+  });
+</script>

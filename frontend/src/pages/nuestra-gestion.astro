@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import hero_2 from "../assets/hero_2.jpeg";
+import SectionProgram from "../components/SectionProgram.astro";
+import primera from "../assets/nuestra-gestion/desayuno-saludable/primera.png";
+import segunda from "../assets/nuestra-gestion/desayuno-saludable/segunda.png";
+import tercera from "../assets/nuestra-gestion/desayuno-saludable/tercera.png";
+import cuarta from "../assets/nuestra-gestion/pasa-hermano/cuarta.png";
+import quinta from "../assets/nuestra-gestion/pasa-hermano/quinta.png";
+import sexta from "../assets/nuestra-gestion/pasa-hermano/sexta.png";
+import septima from "../assets/nuestra-gestion/alimenta-compartiendo/septima.png";
+import octava from "../assets/nuestra-gestion/alimenta-compartiendo/octava.png";
+import novena from "../assets/nuestra-gestion/alimenta-compartiendo/novena.png";
+
+const programs = [
+  {
+    title: 'Programa Desayuno Saludable',
+    description: 'El Banco de Alimentos La Guajira impulsa este programa que ofrece desayunos a los hijos de recicladores asociados, cubriendo una necesidad básica de alimentación. Desde 2021, ha beneficiado a más de 100 niños cada año.',
+    images: [primera.src, segunda.src, tercera.src],
+  },{
+    title:"Programa Pasa Hermano",
+    description:"El Banco de Alimentos La Guajira impulsa este programa que ofrece almuerzos servidos a los recicladores asociados y sus familias, cubriendo una necesidad básica de alimentación y beneficiando a 150 personas.",
+    images:[cuarta.src, quinta.src, sexta.src]
+  },{
+    title:"Programa Alimenta Compartiendo",
+    description:"El Banco de Alimentos La Guajira impulsa este programa que ofrece meriendas a los hijos de recicladores asociados, cubriendo una necesidad básica de alimentación. En 2022 benefició a 80 niños.",
+    images:[septima.src, octava.src, novena.src]
+  }
+] 
+
+---
+
+
+<Layout title="Nuestra Gestion">
+  <Hero bgImageUrl={hero_2.src} titleHero='Gestion Social' descriptionHero='Prestamos servicios en todas las comunas de Riohacha y Maicao mediante el trabajo de nuestros recicladores. Promovemos su bienestar social y educación, mejorando sus condiciones laborales y calidad de vida.' textButton="Conoce mas" hrefButton="#section-program" />
+
+    <main id="section-program">
+    {
+      programs.map((program, index) => (
+        <SectionProgram
+          title={program.title}
+          description={program.description}
+          images={program.images}
+          orderIndex={index}
+        />
+      ))
+    }
+  </main>
+
+
+
+</Layout>

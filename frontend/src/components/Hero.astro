@@ -1,0 +1,43 @@
+---
+import Header from './Header.astro';
+
+interface Props {
+  bgImageUrl: string
+  titleHero: string
+  descriptionHero: string
+  textButton: string
+  hrefButton: string
+}
+
+
+const { bgImageUrl, titleHero, descriptionHero, textButton, hrefButton } = Astro.props;
+
+---
+
+<div class="relative min-h-screen flex flex-col justify-center items-center overflow-hidden">
+    
+    <!-- Imagen de fondo -->
+    <div 
+      class="absolute inset-0 bg-cover bg-center scale-105 animate-[fade-in-down_1s_ease-out]" 
+      style={`background-image: url(${bgImageUrl});`}
+    ></div>
+    
+    <!-- Capa de opacidad -->
+    <div class="absolute inset-0 bg-steel/80 mix-blend-multiply"></div>
+    
+		<Header />
+    <!-- Contenido -->
+    <div class="relative z-20 text-center px-4 max-w-4xl animate-fade-in-up">
+      <h1 class="text-5xl md:text-6xl font-black uppercase tracking-tight mb-6 text-white drop-shadow-md">
+        {titleHero}
+      </h1>
+      <p class="text-lg md:text-xl text-stone-200 mb-10 font-light max-w-2xl mx-auto">
+        {descriptionHero}
+      </p>
+      <a href={hrefButton} 
+         class="inline-block bg-safety text-white font-bold uppercase tracking-wider py-4 px-10 rounded-sm border-2 border-white shadow-tactile hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-tactile-sm transition-all duration-200">
+        {textButton}
+      </a>
+    </div>
+  </div>
+

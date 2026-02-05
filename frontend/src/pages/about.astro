@@ -1,0 +1,117 @@
+---
+import Hero from "../components/Hero.astro"
+import Layout from "../layouts/Layout.astro"
+import about from "../assets/about.png"
+import SectionVisionMision from "../components/SectionVisionMision.astro"
+import Card from "../components/Card.astro"
+import macro1 from "../assets/rutas/macro1.png"
+import macro2 from "../assets/rutas/macro2.png"
+import macro3 from "../assets/rutas/macro3.png" 
+
+const cards = [
+  {
+    img: macro1.src,
+  },
+  {
+    img: macro2.src,
+  },
+  {
+    img: macro3.src,
+  },
+];
+
+---
+
+
+<Layout title="About">
+
+  <Hero bgImageUrl={about.src} descriptionHero="Somos una organización de recicladores que fortalece el tejido social mediante un proceso inclusivo de aprovechamiento: recolectamos, transportamos, clasificamos y pesamos residuos sólidos aprovechables." textButton="Conoce mas" hrefButton="#section-about" titleHero="Nosotros" />
+
+ <div id="section-about">
+  <section class="relative py-28 bg-white overflow-hidden" data-aos="fade-up">
+
+    <div class="absolute inset-0 bg-linear-to-b from-green-100/80 to-transparent pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 max-w-5xl relative">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight mb-10">
+        Conoce Nuestra Historia
+      </h2>
+
+      <p class="text-lg md:text-xl leading-relaxed text-gray-700 font-light">
+        Realizamos nuestra labor al servicio de la comunidad <span class="text-green-600 font-semibold">desde el año 2007</span>. Nuestro impulso fue la necesidad de generar empleo para población vulnerable y, al mismo tiempo, 
+        aprender a ver en los residuos sólidos —o mal llamados basura— una oportunidad y no una problemática.
+      </p>
+
+      <p class="text-lg md:text-xl leading-relaxed text-gray-700 font-light mt-6">
+        Comenzamos el proceso de formalización como organización a partir del año 2016, en cumplimiento del 
+        Decreto 596 de 2016, velando por la <span class="text-green-600 font-semibold" >dignificación</span> de los recicladores y mejorando sus 
+        ingresos y condiciones de vida, así como las de sus familias.
+      </p>
+
+      <p class="text-lg md:text-xl leading-relaxed text-gray-700 font-light mt-6">
+        Actualmente contamos con Macro rutas y Micro rutas de recolección que abarcan comunas y barrios dentro 
+        de nuestras áreas de prestación del servicio en el Distrito Turístico de Riohacha y en el municipio 
+        fronterizo de Maicao.
+      </p>
+    </div>
+  </section>
+</div>
+
+
+<SectionVisionMision />
+
+ <div class="max-w-6xl mx-auto my-14 px-6 text-center">
+    <h2
+      data-aos="fade-up"
+      class="text-3xl md:text-4xl font-semibold text-green-700 mb-12 relative inline-block"
+    >
+      Nuestros horarios y rutas
+      <span class="block w-20 h-1 bg-green-500 mx-auto mt-3 rounded-full"></span>
+    </h2>
+
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center"
+    >
+      {cards.map((card) => (
+        <Card img={card.img} text={""} />
+      ))}
+    </div>
+  </div>
+
+  
+  <section 
+  class="relative flex flex-col items-center justify-center min-h-[80vh] px-6 text-center overflow-hidden"
+>
+  <!-- Fondo animado -->
+  <div class="absolute inset-0 bg-linear-gradient from-green-200 via-black to-green-300 animate-gradientMove blur-2xl"></div>
+
+  <!-- Capa extra con manchas borrosas -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute -top-32 -left-20 w-96 h-96 bg-green-400/40 rounded-full blur-3xl animate-float-slow"></div>
+    <div class="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-green-400/30 rounded-full blur-3xl animate-float-reverse"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-2xl">
+    <p class="text-gray-800 text-lg md:text-xl mb-8 font-medium" data-aos="fade-up">
+      Visita 
+      <a href="/documentos" class="text-green-700 font-semibold hover:underline hover:text-green-800 transition-colors duration-300">
+        Nuestros Documentos
+      </a>
+    </p>
+
+    <p class=" text-gray-800 text-lg md:text-xl mb-8 font-medium ">o</p>
+
+    <a 
+      href="/contacto"
+      class="inline-block px-8 py-3 border-2 border-green-700 text-green-700 font-semibold rounded-xl hover:bg-green-700 hover:text-white transition-all duration-300 shadow-md hover:shadow-green-400/40"
+      data-aos="zoom-in"
+    >
+      Nuestra seccion de Contacto 
+    </a>
+  </div>
+
+  <!-- Animaciones -->
+  </section>
+  
+</Layout>

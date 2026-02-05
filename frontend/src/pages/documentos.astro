@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro"
+import about from "../assets/about.png"
+import CardDownload from "../components/CardDownload.astro"
+
+const cardInfo = [
+  {
+    titulo:"PLAN DE CONTINGENCIAS CORPRECAM 2025",
+    descripcion:"Descarga nuestro plan de contigencias para 2025 en el marco del servicio publico de aseo.",
+    url:"/descargas/PlanContigencias2025.pdf"
+  },
+  {
+    titulo:"PPS CORPRECAM E.S.P RIOHACHA 2025",
+    descripcion:"Descarga nuestro programa de prestacion del servicio publico de aseo.",
+    url:"/descargas/PpsRiohacha2025.pdf"
+  }
+  ,
+  {
+    titulo:"CCU CORPRECAM RESOLUCION RIOHACHA",
+    descripcion:"CONTRATO DE CONDICIONES UNIFORMES PARA LA ACTIVIDAD DEL SERVICIO DE APROVECHAMIENTO EN LA CIUDAD DE RIOHACHA DEPARTAMENTO DE LA GUAJIRA.",
+    url:"/descargas/CcuRiohacha2025.pdf"
+  }
+,
+  {
+    titulo:"CCU CORPRECAM RESOLUCION MAICAO",
+    descripcion:"CONTRATO DE CONDICIONES UNIFORMES PARA LA ACTIVIDAD DEL SERVICIO DE APROVECHAMIENTO EN LA CIUDAD DE MAICAO DEPARTAMENTO DE LA GUAJIRA.",
+    url:"/descargas/CcuMaicao2025.pdf"
+  }
+]
+
+---
+
+
+<Layout title="Documentos">
+    <Hero bgImageUrl={about.src} descriptionHero="Ve o descarga Nuestros Documentos" textButton="Mas informacion" hrefButton="#documents" titleHero="Documentos" />
+
+  
+<section id="documents" class="bg-gray-50"> 
+  <div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 xl:gap-8">
+      {cardInfo.map((card) => (
+        <CardDownload titulo={card.titulo} descripcion={card.descripcion} url={card.url} />
+      ))}
+    </div>
+  </div>
+</section>
+</Layout>

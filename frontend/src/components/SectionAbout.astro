@@ -1,0 +1,56 @@
+---
+const aboutUsImage = "https://corprecam.com/wp-content/uploads/2023/10/Diseno-sin-titulo-2023-10-03T111654.886.png";
+---
+
+<div id="section-about">
+  <!-- Sección 1 -->
+  <section class="py-24 bg-kraft" data-aos="zoom-in">
+    <div class="container mx-auto text-center px-6">
+      <h2 class="text-5xl font-black uppercase text-steel mb-6">Nuestro compromiso ambiental</h2>
+      <p class="text-stone-700 max-w-2xl mx-auto leading-relaxed font-medium">
+        <span class="text-forest font-bold">Corprecam E.S.P</span> trabaja día a día por un mundo más limpio, fomentando la economía circular y el desarrollo sostenible de nuestras comunidades.
+      </p>
+      <p class="text-stone-700 max-w-2xl mx-auto leading-relaxed mt-2 font-medium">
+        Se integra proceso en la recolección de residuos sólidos aprovechables, el transporte selectivo hasta la estación de clasificación y aprovechamiento, clasificación y pesaje.
+      </p>
+    </div>
+  </section>
+
+  <!-- Sección 2 -->
+  <section class="relative py-20 overflow-hidden bg-steel border-y-8 border-moss" data-aos="fade-up">
+    <!-- Fondo con degradado e imagen -->
+    <div class="absolute inset-0">
+      <img 
+        src={aboutUsImage} 
+        alt="Nuestro Equipo" 
+        class="w-full h-full object-cover opacity-10 grayscale mix-blend-multiply"
+      />
+      <div class="absolute inset-0 bg-steel/90"></div>
+    </div>
+
+    <div class="relative container mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+      
+      <!-- Texto -->
+      <div class="md:w-1/2 text-white z-10">
+        <h2 class="text-4xl font-black uppercase mb-6 tracking-wide">Nosotros Somos</h2>
+        <p class="text-lg leading-relaxed mb-4 text-stone-300 font-light border-l-4 border-safety pl-4">
+          Una organización de recicladores de oficios, trabajamos en pro de la dignificación de la labor de los recicladores y de contribuir al cuidado del medioambiente. Estamos registrados ante la Superintendencia de Servicios Públicos para el desarrollo de las actividades de aprovechamiento que contemplan la recolección de los residuos sólidos, el transporte selectivo y la clasificación efectiva.
+        </p>
+        <p class="text-lg leading-relaxed text-stone-300 font-light pl-4">
+          Nuestra organización está comprometida con la sensibilización y la educación ciudadana en el manejo de residuos sólidos recuperables, fomentando una cultura de reciclaje que dignifica el trabajo de los recicladores y mejora la calidad de vida de sus familias.
+        </p>
+      </div>
+
+      <!-- Imagen -->
+      <div class="md:w-1/2 relative flex justify-center md:justify-end z-10">
+        <div class="relative w-full max-w-md h-80 rounded-sm shadow-tactile border-4 border-white overflow-hidden group hover:-translate-y-1 transition-transform">
+          <img 
+            src={aboutUsImage} 
+            alt="Nuestro Equipo" 
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

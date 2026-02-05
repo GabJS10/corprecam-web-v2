@@ -1,0 +1,70 @@
+
+<div class="bg-paper p-8 rounded-lg shadow-tactile border-2 border-steel">
+  <form action="#" method="POST" class="space-y-6">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label for="nombre" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Nombres</label>
+        <div class="mt-2.5">
+          <input type="text" name="nombre" id="nombre" autocomplete="given-name" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6">
+        </div>
+      </div>
+      <div>
+        <label for="apellido" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Apellidos</label>
+        <div class="mt-2.5">
+          <input type="text" name="apellido" id="apellido" autocomplete="family-name" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="email" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Email</label>
+      <div class="mt-2.5">
+        <input type="email" name="email" id="email" autocomplete="email" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6">
+      </div>
+    </div>
+
+    <div>
+      <label for="telefono" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Número de teléfono</label>
+      <div class="mt-2.5">
+        <input type="tel" name="telefono" id="telefono" autocomplete="tel" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6">
+      </div>
+    </div>
+
+    <div>
+      <label for="tipo-solicitud" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Tipo de solicitud</label>
+      <div class="mt-2.5 relative">
+        <select id="tipo-solicitud" name="tipo-solicitud" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6 appearance-none">
+          <option value="general">Contacto general</option>
+          <option value="pregunta">Pregunta (P)</option>
+          <option value="queja">Queja (Q)</option>
+          <option value="reclamo">Reclamo (R)</option>
+          <option value="sugerencia">Sugerencia (S)</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-steel">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="asunto" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Asunto</label>
+      <div class="mt-2.5">
+        <input type="text" name="asunto" id="asunto" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6">
+      </div>
+    </div>
+
+    <div>
+      <label for="mensaje" class="block text-xs font-bold uppercase tracking-wider leading-6 text-steel">Mensaje</label>
+      <div class="mt-2.5">
+        <textarea name="mensaje" id="mensaje" rows="4" class="block w-full rounded-sm border-2 border-steel bg-white px-3.5 py-2 text-steel shadow-sm focus:outline-none focus:border-safety focus:shadow-tactile-sm transition-all sm:text-sm sm:leading-6 resize-none" placeholder="Escribe tu mensaje aquí..."></textarea>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <button type="submit" class="block w-full rounded-sm bg-safety border-2 border-steel px-3.5 py-3 text-center text-sm font-bold uppercase tracking-wider text-white shadow-tactile hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-tactile-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-safety transition-all cursor-pointer">
+        Enviar mensaje
+      </button>
+    </div>
+  </form>
+</div>

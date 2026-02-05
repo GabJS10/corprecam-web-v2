@@ -1,0 +1,75 @@
+---
+import MisionVision from "../assets/vision-mision.jpeg";
+
+const content = [
+  {
+    id: "mision",
+    title: "Misión",
+    subtitle: "Nuestra",
+    icon: "target",
+    text: `Somos una organización prestadora del servicio público de aseo en el área de aprovechamiento, Sensibilizando y educando a la ciudadanía, en el manejo de los residuos sólidos recuperable, <strong>creando conciencia de la importancia del reciclaje con propósito social y la incorporación a la cadena productiva de eso residuos</strong>, haciendo de nuestra labor una importante razón para proteger nuestro planeta `,
+  },
+  {
+    id: "vision",
+    title: "Visión",
+    subtitle: "Nuestra",
+    icon: "eye",
+    text: `Consolidarnos como una organización prestadora del servicio público de aseo en la actividad de aprovechamiento confiable en el manejo de los residuos sólidos en la región Caribe y Colombia, con eficiencia, calidad, <strong>creando una cultura del reciclaje y cuidado del medio ambiente con propósito social.</strong>`,
+  },
+];
+---
+<section class="relative w-full py-20 md:py-28 bg-transparent overflow-hidden">
+  <!-- Fondo -->
+  <div class="absolute inset-0 w-full h-full z-0">
+    <img 
+      src={MisionVision.src} 
+      alt="Fondo" 
+      class="w-full h-full object-cover opacity-30"
+    />
+    <div class="absolute inset-0 bg-linear-to-r from-green-900/90 to-green-800/70"></div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-20">
+    {content.map((item) => (
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12 group">
+
+        <!-- Lado Izquierdo -->
+        <div class="w-full md:w-1/4 flex items-center justify-start md:justify-end gap-4">
+          <div class="text-green-400 shrink-0 transition-all duration-300 group-hover:scale-105 group-hover:text-green-300">
+            {item.icon === "target" ? (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-10 h-10 mx-5">
+                <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" class="w-10 h-10 mx-5">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            )}
+          </div>
+
+          <div class="flex flex-col">
+            <span class="text-gray-200 text-xl md:text-2xl font-light tracking-wide">
+              {item.subtitle}
+            </span>
+            <span class="text-green-400 text-3xl md:text-4xl font-extrabold uppercase tracking-wide drop-shadow-sm">
+              {item.title}
+            </span>
+          </div>
+        </div>
+
+        <!-- Separador -->
+        <div class="hidden md:block w-[2px] h-32 bg-green-300/40 self-center"></div>
+
+        <!-- Texto -->
+        <div class="w-full md:w-2/3">
+          <p
+            class="text-gray-100/90 text-lg leading-relaxed tracking-wide"
+            set:html={item.text}
+          />
+        </div>
+
+      </div>
+    ))}
+  </div>
+</section>
