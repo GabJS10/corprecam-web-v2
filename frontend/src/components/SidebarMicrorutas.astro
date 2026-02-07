@@ -1,0 +1,90 @@
+---
+interface Props {
+  macrorutaSlug: string;
+  microrutas: {
+    name: string;
+    slug: string;
+  }[];
+  currentSlug?: string;
+}
+
+const { macrorutaSlug, microrutas, currentSlug } = Astro.props;
+---
+
+<aside
+  class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden sticky top-8 self-start"
+>
+  <div class="p-5 border-b border-stone-100 bg-stone-50">
+    <h3
+      class="font-bold uppercase tracking-wider flex items-center gap-2 text-forest text-sm"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0121 18.382V7.618a1 1 0 01-.553-.894L15 4m0 13V4m0 0L9 7"
+        ></path>
+      </svg>
+      Microrutas
+    </h3>
+  </div>
+  <nav class="flex flex-col max-h-[60vh] overflow-y-auto custom-scrollbar">
+    {
+      microrutas.map((ruta) => (
+        <a
+          href={`/recolecciones/${macrorutaSlug}/${ruta.slug}#contenido-macroruta`}
+          class:list={[
+            "group px-5 py-3 transition-all text-sm font-medium flex items-center justify-between border-l-4",
+            ruta.slug === currentSlug
+              ? "bg-moss/10 text-forest border-forest"
+              : "text-stone-600 hover:bg-stone-50 hover:text-forest border-transparent hover:border-stone-200",
+          ]}
+        >
+          <span>{ruta.name}</span>
+          {ruta.slug === currentSlug && (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          )}
+        </a>
+      ))
+    }
+
+    {
+      microrutas.length === 0 && (
+        <div class="p-6 text-center text-stone-400 italic text-sm bg-stone-50/50">
+          No hay rutas asignadas.
+        </div>
+      )
+    }
+  </nav>
+</aside>
+
+<style>
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #d6d3d1;
+    border-radius: 20px;
+  }
+</style>

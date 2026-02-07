@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import type { Macroruta } from "../types/strapi";
+
+const STRAPI_URL = import.meta.env.STRAPI_URL || "http://localhost:1337";
+const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN;
+
+let macrorutas: Macroruta[] = [];
+let error = null;
+
+try {
+  const response = await fetch(
+    `${STRAPI_URL}/api/macrorutas?fields[0]=name&fields[1]=description&fields[2]=slug&fields[3]=documentId`,
+    {
+      headers: {
+        Authorization: `Bearer ${STRAPI_TOKEN}`,
+      },
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Error fetching macrorutas: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  macrorutas = data.data || [];
+} catch (e) {
+  console.error("Error loading macrorutas:", e);
+  error = "No se pudieron cargar las macrorutas en este momento.";
+}
+
+// Background image for the hero (using a default one or a specific one for this page)
+// Using a placeholder or reusing one from the project if known.
+// Looking at other pages, they import images. I'll use a generic one or one of the existing ones.
+// I'll reuse the one from 'nuestra-gestion' or 'index' for consistency if I don't have a specific one.
+// Let's use the one from index temporarily or just a placeholder URL if I can't import easily.
+// Actually, I can use the same one as index or a specific one.
+// Let's use the one from index.astro: "https://corprecam.com/wp-content/uploads/2023/10/Diseno-sin-titulo-2023-10-03T100736.251.png"
+const heroImage =
+  "https://corprecam.com/wp-content/uploads/2023/10/Diseno-sin-titulo-2023-10-03T100736.251.png";
+---
+
+<Layout title="Recolecciones">
+  <Hero
+    bgImageUrl={heroImage}
+    titleHero="Macrorutas"
+    descriptionHero="Conoce las zonas de operación y recolección organizadas por nuestra cooperativa."
+    textButton="Ver Rutas"
+    hrefButton="#rutas-list"
+  />
+
+  <div class="bg-kraft min-h-screen" id="rutas-list">
+    <main class="container mx-auto px-6 py-12">
+      {
+        error && (
+          <div
+            class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-8 rounded shadow-sm"
+            role="alert"
+          >
+            <p class="font-bold">Error</p>
+            <p>{error}</p>
+          </div>
+        )
+      }
+
+      {
+        !error && macrorutas.length === 0 && (
+          <div class="text-center py-12">
+            <p class="text-xl text-stone-600 font-medium">
+              No se encontraron macrorutas disponibles.
+            </p>
+          </div>
+        )
+      }
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          macrorutas.map((ruta, index) => (
+            <a
+              href={`/recolecciones/${ruta.slug}`}
+              class="block bg-paper border-2 border-steel rounded-lg overflow-hidden shadow-tactile hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-tactile-sm transition-all duration-200 flex flex-col group"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
+              <div class="p-6 flex flex-col h-full">
+                <div class="flex justify-between items-start mb-4">
+                  <h2 class="text-2xl font-bold text-forest uppercase tracking-tight group-hover:text-safety transition-colors">
+                    {ruta.name}
+                  </h2>
+                  <span class="bg-moss/20 text-forest text-xs font-bold px-2 py-1 rounded border border-moss uppercase tracking-wider">
+                    {ruta.slug}
+                  </span>
+                </div>
+
+                <p class="text-stone-700 mb-6 flex-grow leading-relaxed font-medium">
+                  {ruta.description || "Sin descripción disponible."}
+                </p>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </main>
+  </div>
+</Layout>

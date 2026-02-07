@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "microrutas",
+  "info": {
+    "singularName": "microruta",
+    "pluralName": "microrutas",
+    "displayName": "Microruta"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 255,
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name",
+      "required": true
+    },
+    "MapaCoords": {
+      "type": "json"
+    },
+    "recicladores": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::reciclador.reciclador",
+      "mappedBy": "microrutas"
+    }
+  }
+}

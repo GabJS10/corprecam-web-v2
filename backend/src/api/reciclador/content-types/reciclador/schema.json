@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "recicladores",
+  "info": {
+    "singularName": "reciclador",
+    "pluralName": "recicladores",
+    "displayName": "Recicladores"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "maxLength": 255,
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "maxLength": 255,
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "regex": "^\\d{10}$"
+    },
+    "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "microrutas": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::microruta.microruta",
+      "inversedBy": "recicladores"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import SidebarMicrorutas from "../../../components/SidebarMicrorutas.astro";
+import Hero from "../../../components/Hero.astro";
+import type { Macroruta, Microruta } from "../../../types/strapi";
+
+export async function getStaticPaths() {
+  const STRAPI_URL = import.meta.env.STRAPI_URL || "http://localhost:1337";
+  const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN;
+
+  try {
+    const response = await fetch(`${STRAPI_URL}/api/macrorutas?populate[microrutas][fields][0]=slug&fields[0]=slug`, {
+        headers: { Authorization: `Bearer ${STRAPI_TOKEN}` }
+    });
+    const data = await response.json();
+    const items = data.data || [];
+
+    const paths: { params: { macro_slug: string; micro_slug: string } }[] = [];
+    items.forEach((macro: any) => {
+        if (macro.microrutas) {
+            macro.microrutas.forEach((micro: any) => {
+                paths.push({
+                    params: {
+                        macro_slug: macro.slug,
+                        micro_slug: micro.slug
+                    }
+                });
+            });
+        }
+    });
+
+    return paths;
+  } catch (error) {
+    console.error("Error building static paths for microrutas:", error);
+    return [];
+  }
+}
+
+const { macro_slug, micro_slug } = Astro.params;
+
+const STRAPI_URL = import.meta.env.STRAPI_URL || "http://localhost:1337";
+const STRAPI_TOKEN = import.meta.env.STRAPI_API_TOKEN;
+
+let macrorutaContext: Macroruta | null = null;
+let currentMicroruta: Microruta | null = null;
+let error = null;
+
+// Fetch Macroruta Context (Sidebar)
+try {
+  const response = await fetch(
+    `${STRAPI_URL}/api/macrorutas?filters[slug][$eq]=${macro_slug}&populate[microrutas][fields][0]=name&populate[microrutas][fields][1]=slug&fields[0]=name&fields[1]=slug&fields[2]=description`,
+    {
+      headers: {
+        Authorization: `Bearer ${STRAPI_TOKEN}`,
+      },
+    }
+  );
+  const data = await response.json();
+  if (data.data && data.data.length > 0) {
+    macrorutaContext = data.data[0];
+  } else {
+    error = "Macroruta no encontrada";
+  }
+} catch (e) {
+  console.error("Error fetching macroruta context:", e);
+  error = "Error cargando la información de la ruta.";
+}
+
+// Fetch Microruta Details (Content)
+if (!error && micro_slug) {
+  try {
+    const response = await fetch(
+      `${STRAPI_URL}/api/microrutas?filters[slug][$eq]=${micro_slug}&populate[recicladores][populate]=photo`,
+      {
+        headers: {
+          Authorization: `Bearer ${STRAPI_TOKEN}`,
+        },
+      }
+    );
+    const data = await response.json();
+    if (data.data && data.data.length > 0) {
+      currentMicroruta = data.data[0];
+    } else {
+       error = "Microruta no encontrada";
+    }
+  } catch (e) {
+    console.error("Error fetching microruta details:", e);
+    error = "Error cargando los detalles de la microruta.";
+  }
+}
+
+const heroImage = "https://corprecam.com/wp-content/uploads/2023/10/Diseno-sin-titulo-2023-10-03T100736.251.png";
+---
+
+<Layout title={currentMicroruta ? `${currentMicroruta.name} - ${macrorutaContext?.name}` : "Detalles de Ruta"}>
+
+  <Hero
+    bgImageUrl={heroImage}
+    titleHero={macrorutaContext ? macrorutaContext.name : "Macroruta"}
+    descriptionHero={macrorutaContext?.description || "Explora las zonas de recolección y sus recicladores asociados."}
+    textButton="Ver Microrutas"
+    hrefButton="#contenido-macroruta"
+  />
+
+  <div id="contenido-macroruta" class="bg-kraft min-h-screen">
+    <div class="container mx-auto px-4 md:px-6 py-12">
+
+      <!-- Breadcrumb -->
+      <a href="/recolecciones" class="inline-flex items-center text-forest font-bold mb-8 hover:underline uppercase tracking-wider text-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Volver a todas las rutas
+      </a>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+
+        <!-- Sidebar -->
+        <div class="md:col-span-4 lg:col-span-3">
+          {macrorutaContext && (
+            <SidebarMicrorutas
+              macrorutaSlug={macrorutaContext.slug}
+              microrutas={macrorutaContext.microrutas || []}
+              currentSlug={micro_slug}
+            />
+          )}
+        </div>
+
+        <!-- Main Content -->
+        <main class="md:col-span-8 lg:col-span-9">
+          {error ? (
+             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-sm" role="alert">
+                <p class="font-bold">Error</p>
+                <p>{error}</p>
+             </div>
+          ) : currentMicroruta ? (
+            <div class="animate-fade-in-up">
+
+              <!-- Content Header -->
+              <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-8 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 border-b border-stone-100 pb-6">
+                  <div>
+                    <h1 class="text-3xl md:text-4xl font-black uppercase text-steel mb-2">{currentMicroruta.name}</h1>
+                    <span class="inline-flex items-center px-3 py-1 bg-forest/10 text-forest text-xs font-bold rounded-full border border-forest/20 uppercase tracking-wider">
+                      <span class="w-2 h-2 rounded-full bg-forest mr-2 animate-pulse"></span>
+                      Microruta Activa
+                    </span>
+                  </div>
+                </div>
+
+                <div class="prose prose-stone max-w-none prose-lg">
+                  <p class="text-stone-600 leading-relaxed font-normal">
+                    {currentMicroruta.description}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Map Placeholder -->
+              <div class="w-full aspect-video bg-stone-100 border border-stone-200 rounded-xl mb-8 relative overflow-hidden group shadow-sm">
+                 <div class="absolute inset-0 flex items-center justify-center text-stone-500 font-bold text-xl uppercase tracking-widest bg-stone-200/50 backdrop-blur-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span class="bg-white px-6 py-3 rounded-lg shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">Mapa Interactivo (Pronto)</span>
+                 </div>
+                 <img src="https://placehold.co/800x400/E8E4D9/2E3A42?text=Mapa+de+la+Ruta" alt="Mapa de la ruta" class="w-full h-full object-cover opacity-80 mix-blend-multiply transition-transform duration-700 group-hover:scale-105" />
+              </div>
+
+              <!-- Recicladores Section -->
+              <div class="bg-white rounded-xl p-8 border border-stone-200 shadow-sm">
+                <h2 class="text-2xl font-bold uppercase text-forest mb-6 flex items-center gap-3">
+                  <div class="p-2 bg-moss/10 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  Recicladores de la ruta
+                </h2>
+                <p class="text-stone-500 mb-8 italic text-sm border-l-4 border-safety pl-4 py-1 bg-orange-50/50 rounded-r">
+                  Estos recicladores son los encargados de esta zona. ¡Contáctalos para entregar tu material!
+                </p>
+
+                {currentMicroruta.recicladores && currentMicroruta.recicladores.length > 0 ? (
+                  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {currentMicroruta.recicladores.map((reciclador) => {
+                       // Resolve Image URL safely
+                       let photoUrl = "https://placehold.co/150x150/2C5F2D/FFFFFF?text=Sin+Foto";
+                       if (reciclador.photo?.url) {
+                          photoUrl = reciclador.photo.url.startsWith('http')
+                            ? reciclador.photo.url
+                            : `${STRAPI_URL}${reciclador.photo.url}`;
+                       }
+
+                       return (
+                        <div class="group bg-stone-50 border border-stone-200 rounded-lg p-5 flex items-center gap-4 hover:bg-white hover:shadow-md hover:border-forest/50 transition-all duration-300">
+                          <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-stone-200 group-hover:border-forest shrink-0 transition-colors shadow-sm">
+                            <img
+                              src={photoUrl}
+                              alt={reciclador.name}
+                              class="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div class="overflow-hidden">
+                            <h3 class="font-bold text-steel truncate group-hover:text-forest transition-colors text-lg">{reciclador.name}</h3>
+                            {reciclador.phone && (
+                              <a href={`tel:${reciclador.phone}`} class="text-sm text-safety font-bold hover:underline flex items-center gap-1 mt-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                {reciclador.phone}
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                       )
+                    })}
+                  </div>
+                ) : (
+                  <div class="text-center py-10 bg-stone-50 rounded-lg border border-dashed border-stone-300">
+                    <p class="text-stone-400">No hay recicladores asignados a esta ruta aún.</p>
+                  </div>
+                )}
+              </div>
+
+            </div>
+          ) : (
+            <div class="flex items-center justify-center h-64 bg-white rounded-xl border border-stone-200 shadow-sm">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-forest"></div>
+            </div>
+          )}
+        </main>
+      </div>
+    </div>
+  </div>
+</Layout>
