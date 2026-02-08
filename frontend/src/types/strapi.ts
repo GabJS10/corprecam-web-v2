@@ -29,6 +29,7 @@ export interface Microruta {
   description: string;
   slug: string;
   recicladores?: Reciclador[];
+  MapaCoords?: [number, number][];
 }
 
 export interface Macroruta {

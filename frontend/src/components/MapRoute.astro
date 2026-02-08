@@ -1,0 +1,90 @@
+---
+import 'leaflet/dist/leaflet.css';
+
+interface Props {
+  points?: [number, number][]; // GeoJSON format: [Longitude, Latitude]
+}
+
+const { points = [] } = Astro.props;
+const hasPoints = points && points.length > 0;
+---
+
+<div class="w-full aspect-video bg-stone-100 border border-stone-200 rounded-xl mb-8 relative overflow-hidden group shadow-sm z-0">
+  {hasPoints ? (
+    <div id="map-container" data-points={JSON.stringify(points)} class="w-full h-full z-0"></div>
+  ) : (
+    <>
+      <div class="absolute inset-0 flex items-center justify-center text-stone-500 font-bold text-xl uppercase tracking-widest bg-stone-200/50 backdrop-blur-sm z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <span class="bg-white px-6 py-3 rounded-lg shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">Mapa Interactivo (Pronto)</span>
+      </div>
+      <img src="https://placehold.co/800x400/E8E4D9/2E3A42?text=Mapa+de+la+Ruta" alt="Mapa de la ruta" class="w-full h-full object-cover opacity-80 mix-blend-multiply transition-transform duration-700 group-hover:scale-105" />
+    </>
+  )}
+</div>
+
+{hasPoints && (
+  <script>
+    import L from 'leaflet';
+
+    // Fix for default marker icons in Vite
+    import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+    import markerIcon from 'leaflet/dist/images/marker-icon.png';
+    import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+    // @ts-ignore
+    delete L.Icon.Default.prototype._getIconUrl;
+
+    L.Icon.Default.mergeOptions({
+        iconRetinaUrl: markerIcon2x.src,
+        iconUrl: markerIcon.src,
+        shadowUrl: markerShadow.src,
+    });
+
+    const initMap = () => {
+      const mapContainer = document.getElementById('map-container');
+      if (!mapContainer) return;
+
+      // @ts-ignore
+      if (mapContainer._leaflet_id) return;
+
+      const pointsData = mapContainer.dataset.points;
+      if (!pointsData) return;
+      
+      const points = JSON.parse(pointsData);
+
+      // Convert GeoJSON [Lng, Lat] to Leaflet [Lat, Lng]
+      const latLngPoints = points.map((p: number[]) => [p[1], p[0]]);
+
+      if (latLngPoints.length === 0) return;
+
+      const startPoint = latLngPoints[0];
+
+      const map = L.map('map-container').setView(startPoint, 13);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+      }).addTo(map);
+
+      const polyline = L.polyline(latLngPoints, {
+        color: '#2C5F2D', // Forest color
+        weight: 5,
+        opacity: 0.8,
+        smoothFactor: 1
+      }).addTo(map);
+
+      const startMarker = L.marker(latLngPoints[0]).addTo(map);
+      startMarker.bindPopup("<b>Inicio de Ruta</b>");
+
+      const endMarker = L.marker(latLngPoints[latLngPoints.length - 1]).addTo(map);
+      endMarker.bindPopup("<b>Fin de Ruta</b>");
+
+      map.fitBounds(polyline.getBounds(), { padding: [50, 50] });
+    };
+
+    document.addEventListener('astro:page-load', initMap); 
+    document.addEventListener('DOMContentLoaded', initMap);
+  </script>
+)}
+

@@ -1,50 +1,57 @@
 ---
-import Footer from '../components/Footer.astro';
+import Footer from "../components/Footer.astro";
 ---
+
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/png" href="/logo.png" class="bg-green-900" />
-		<meta name="generator" content={Astro.generator} />
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-		<title>Corprecam E.S.P</title>
-	</head>
-	<body>
-		<slot />
-		<Footer />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/logo.png" class="bg-green-900" />
+    <meta name="generator" content={Astro.generator} />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Corprecam E.S.P</title>
+  </head>
+  <body>
+    <slot />
+    <Footer />
 
-		<script>
-			import AOS from 'aos';
-			import 'aos/dist/aos.css';
+    <script>
+      import AOS from "aos";
+      import "aos/dist/aos.css";
 
-			AOS.init(
-				{
-					duration: 1000,
-					once: true,
-					offset: 100
-				}
-			) 
-		</script>
-	</body>
+      const initAos = () => {
+        AOS.init({
+          duration: 1000,
+          once: true,
+          offset: 100,
+        });
+      };
+
+      document.addEventListener("DOMContentLoaded", initAos);
+      document.addEventListener("astro:page-load", initAos);
+    </script>
+  </body>
 </html>
 
 <style is:global>
-	@import "tailwindcss";
+  @import "tailwindcss";
 
-	:root {
-		font-family: 'Poppins', sans-serif;
+  :root {
+    font-family: "Poppins", sans-serif;
 
     /* Eco-Industrial Humano Tokens */
-    --color-kraft: #E8E4D9;
-    --color-paper: #F7F5F0;
-    --color-forest: #2C5F2D;
-    --color-moss: #97BC62;
-    --color-safety: #FF8C00;
-    --color-steel: #2E3A42;
+    --color-kraft: #e8e4d9;
+    --color-paper: #f7f5f0;
+    --color-forest: #2c5f2d;
+    --color-moss: #97bc62;
+    --color-safety: #ff8c00;
+    --color-steel: #2e3a42;
     --color-stone: #788475;
-	}
+  }
 
   @theme {
     --color-kraft: var(--color-kraft);
@@ -54,7 +61,7 @@ import Footer from '../components/Footer.astro';
     --color-safety: var(--color-safety);
     --color-steel: var(--color-steel);
     --color-stone: var(--color-stone);
-    
+
     --shadow-tactile: 4px 4px 0px var(--color-steel);
     --shadow-tactile-sm: 2px 2px 0px var(--color-steel);
     --shadow-tactile-lg: 6px 6px 0px var(--color-steel);
@@ -66,76 +73,117 @@ import Footer from '../components/Footer.astro';
   }
 
   @keyframes fade-in-down {
-    0% { opacity: 0; transform: translateY(-20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes fade-in-up-init {
-					0% {
-						opacity: 0;
-						transform: translateY(20px);}
-					100% {
-						opacity: 1;
-						transform: translateY(0);}
-				}
-
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   @keyframes fade-in-up {
-    0% { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @keyframes scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   @keyframes scroll-reverse {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(0); }
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
   }
 
-	@keyframes float {
-    0% { transform: translateY(0) translateX(0); }
-    100% { transform: translateY(-20px) translateX(-30px); }
+  @keyframes float {
+    0% {
+      transform: translateY(0) translateX(0);
+    }
+    100% {
+      transform: translateY(-20px) translateX(-30px);
+    }
   }
 
-	
-	    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+  @keyframes gradientMove {
+    0% {
+      background-position: 0% 50%;
     }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
-    @keyframes f5at-slow {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(-40px) translateX(40px); }
-      100% { transform: translateY(0) translateX(0); }
+  @keyframes f5at-slow {
+    0% {
+      transform: translateY(0) translateX(0);
     }
+    50% {
+      transform: translateY(-40px) translateX(40px);
+    }
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+  }
 
-    @keyframes float-reverse {
-      0% { transform: translateY(0) translateX(0); }
-      50% { transform: translateY(40px) translateX(-40px); }
-      100% { transform: translateY(0) translateX(0); }
+  @keyframes float-reverse {
+    0% {
+      transform: translateY(0) translateX(0);
     }
+    50% {
+      transform: translateY(40px) translateX(-40px);
+    }
+    100% {
+      transform: translateY(0) translateX(0);
+    }
+  }
 
-    .animate-fade-in-up-init {
-      animation: fade-in-up-init 0.8s ease-out forwards;
-    }
+  .animate-fade-in-up-init {
+    animation: fade-in-up-init 0.8s ease-out forwards;
+  }
 
-    .animate-gradientMove {
-      background-size: 200% 200%;
-      animation: gradientMove 5s ease-in-out infinite;
-    }
+  .animate-gradientMove {
+    background-size: 200% 200%;
+    animation: gradientMove 5s ease-in-out infinite;
+  }
 
-    .animate-float-slow {
-      animation: float-slow 18s ease-in-out infinite;
-    }
+  .animate-float-slow {
+    animation: float-slow 18s ease-in-out infinite;
+  }
 
-    .animate-float-reverse {
-      animation: float-reverse 20s ease-in-out infinite;
-    }
- 
+  .animate-float-reverse {
+    animation: float-reverse 20s ease-in-out infinite;
+  }
 
   .animate-scroll {
     animation: scroll 20s linear infinite;
@@ -155,10 +203,10 @@ import Footer from '../components/Footer.astro';
 </style>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
 </style>
